@@ -14,6 +14,7 @@ class CategoryTableSeeder extends Seeder
     public function run()
     {
 
+     // array contenente le $categorie
       $categorie=['sport', 'tecnologia', 'fantasy', 'gossip', 'comics'];
 
 
