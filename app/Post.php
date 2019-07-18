@@ -8,4 +8,8 @@ class Post extends Model
 {
     // specifico i dati compilabili
     protected $fillable = ['title', 'content', ' author', 'slug', 'category'];
+    public function category(){
+      return $this->belongsTo('App\Category');
+    }
+
 }
