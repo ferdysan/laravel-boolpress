@@ -14,6 +14,23 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        // inizializziamo una variabile con un oggetto faker
+        $faker = Faker::create();
+
+
+        for ($i=0; $i < 10; $i++) {
+           $post = new Post();
+
+
+           $dati_post=[
+             'title'=> $faker->sentence(),
+             'content'=>$faker->text(2000),
+             'author'=>$faker->firstName.'   '.$faker->lastname,
+             'slug'=>Str::slug($post->title)
+           ];
+
+           $post->fill($dati_post);
+           $post->save();
+        }
     }
 }
