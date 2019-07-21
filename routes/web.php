@@ -11,10 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'HomeController@index')->name('home');
+// rotta che mi controlla i post
+Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
+// lo slug
+Route::get('/categories/{slug}', 'PostController@postInCategory')->name('posts.category');
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+// modo di raggruppare rotte che hanno caratteristiche simili
+// il namespace mi inserisce davanti le mie rotte il preficco Admin per trovare la cartella dove
+// ho i controller
+
+Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function(){
+  Route::get('/', 'HomeController@index')->name('home');
+  Route::resource('/posts', 'PostController');
+  // Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
+  // Route::get('/posts/{slug}', 'PostControler@edit')->name('posts.edit');
+});

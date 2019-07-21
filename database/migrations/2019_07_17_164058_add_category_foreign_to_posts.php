@@ -14,6 +14,7 @@ class AddCategoryForeignToPosts extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
+          // nullable perchè altrimenti parte con la colonna a tutti '0' in quanto valore di partenza per un intero
             $table->integer('category_id')->unsigned()->after('id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
         });

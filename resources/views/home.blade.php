@@ -1,23 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+  <div class="container">
+    <ul>
+   @forelse ($posts as $post)
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+       <li>
+         <a href="{{route('posts.show', $post->slug)}}">{{$post->title}}</a>,
+         di {{$post->author}}, del {{$post->created_at}} - <em>
+            @if (!empty($post->category))
+              (<a href="{{route('posts.category', $post->category->slug )}}">{{$post->category->name}})</a>
+            @else
+              (-)
+            @endif
+          </em>
+        
+          @if (($post->tags)->isNotEmpty())
+            TAG:
+            @foreach ($post->tags as $tag)
+              {{$tag->name}}@if(!$loop->last),@endif
+            @endforeach
+          @endif
+       </li>
 
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+   @empty
+     <p>non ci sono post</p>
+
+   @endforelse
+ </ul>
+  </div>
+
 @endsection
