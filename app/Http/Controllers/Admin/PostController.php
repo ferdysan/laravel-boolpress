@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
 use App\Category;
+use App\PostImage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -50,10 +52,18 @@ class PostController extends Controller
           unset($dati['category_id']);
         }
 
+        // creo il nuovo post, assegno i valori e salvo a db
+
         $newPost = new Post();
         $newPost->fill($dati);
         $newPost->save();
+        // salvo le associazioni con i tag selezionati dall'utente
         $newPost->tags()->sync($dati['tags']);
+        // salvo l'immagine di copertina partendo da public
+        $img= Storage::put('post_images', $dati['post_image']);
+        $newPostImage= new PostImage();
+        $newPostImage->path= $img;
+        $newPost->postImage()->save($newPostImage);
 
         return redirect()->route('admin.posts.index');
     }
@@ -78,7 +88,6 @@ class PostController extends Controller
       'post' => $post,
       'category'=>$category,
       'tags'=>$tags
-
       ]);
 
     }

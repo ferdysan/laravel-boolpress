@@ -28,12 +28,26 @@ class PostController extends Controller
     }
     $posts= $category->posts;
 
-  
+
 
     return view('posts.category')->with([
       'posts'=> $posts,
       'category'=>$category
     ]);
+
+
+    public function filterPostsByAuthor(Request $request){
+      $author = $request ->input('author');
+      return redirect()-route('posts.author', $author);
+    }
+
+    public function postByAuthor($author){
+      $posts=Post::byAuthor($author)->get();
+      return view('posts.author')->whith([
+        'author'=>$author,
+        'posts'=>$posts
+      ]);
+    }
 
   }
 }

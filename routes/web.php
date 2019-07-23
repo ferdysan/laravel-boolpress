@@ -18,6 +18,10 @@ Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
 // lo slug
 Route::get('/categories/{slug}', 'PostController@postInCategory')->name('posts.category');
 
+Route::post('/posts-by-author', 'PostController@filterPostByAuthor')->name('posts.filterByAuthor');
+
+Route::get('/author/{author_name}', 'PostController@postByAuthor')->name('posts.author');
+
 
 Auth::routes();
 

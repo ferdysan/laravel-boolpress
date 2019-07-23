@@ -12,7 +12,7 @@
             </ul>
         </div>
     @endif
-    <form  action="{{route('admin.posts.store')}}" method="post">
+    <form  action="{{route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
       @csrf
       <div class="form-group">
         <label for="title">Titolo</label>
@@ -30,7 +30,7 @@
         <select class="form-control" name="category_id">
           <option value="">seleziona la categoria</option>
           @foreach ($categories as $category)
-            <option value="{{$category->id}}">{{$category->name}}</option>
+            <option value="{{$category->id}}" {{old('category_id') ==$category->id ? 'selected' : ''}}>{{$category->name}}</option>
           @endforeach
         </select>
       </div>
@@ -38,11 +38,19 @@
       <div class="form-group">
         <label>TAG:</label><br>
         @foreach ($tags as $tag)
-
-          <label><input type="checkbox" name="tags[]" value="{{$tag->id}}">{{$tag->name}}</label>
-
-
+          <label><input type="checkbox" name="tags[]" value="{{$tag->id}}" >{{$tag->name}}</label>
         @endforeach
+      </div>
+
+      <div class="form-group">
+        <label>Pubblico o Privato</label>
+        <label><input type="radio" name="public" value="1">Pubblico</label>
+        <label><input type="radio" name="public" value="0">Privato</label>
+      </div>
+      <div class="form-group">
+         <label for="post_image">Immagine di copertina</label>
+         <input type="file" name="post_image" class="form-control-file">
+
       </div>
 
       <div class="form-group">

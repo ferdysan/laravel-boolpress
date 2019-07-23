@@ -3,6 +3,17 @@
 @section('content')
   <div class="container">
     <ul>
+      <form class="" action="{{route('posts.author')}}" method="post">
+        @csrf
+        <select name="author">
+         <option value="">Scegli un autore</option>
+            @foreach ($authors as $author_record)
+               <option value="{{$author_record->author}}">{{$author_record->author}}</option>
+            @endforeach
+        </select>
+        <input type="submit" name="" value="Filtra per autore">
+      </form>
+
    @forelse ($posts as $post)
 
        <li>
@@ -14,7 +25,6 @@
               (-)
             @endif
           </em>
-        
           @if (($post->tags)->isNotEmpty())
             TAG:
             @foreach ($post->tags as $tag)
@@ -24,11 +34,13 @@
        </li>
 
 
+
    @empty
      <p>non ci sono post</p>
 
    @endforelse
  </ul>
+ {{$posts->links()}}
   </div>
 
 @endsection

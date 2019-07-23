@@ -14,7 +14,7 @@
           </div>
       @endif
       <a class="btn btn-primary" href="{{route('admin.posts.index')}}">Torna a tutti i post</a>
-        
+
       <form action="{{ route('admin.posts.update', $post->id) }}" method="post">
           @method('PUT')
         @csrf
@@ -41,9 +41,15 @@
         <div class="form-group">
           <label>TAG:</label>
           @foreach ($tags as $tag)
-            <label><input type="checkbox" name="tag_ids[]" value="{{ $tag->id }}"> {{ $tag->name }}</label>
+
+            <input  type="checkbox" value="{{$tag->id}}" name="tag_ids[]"
+            @foreach ( as )
+              @if($age->id == $ages->ages ) checked
+              @endif @endforeach />
           @endforeach
         </div>
+        
+
         <div class="form-group">
             <input class="btn btn-success" type="submit" value="Modifica">
         </div>
